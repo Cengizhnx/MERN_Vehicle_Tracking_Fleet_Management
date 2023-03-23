@@ -1,0 +1,67 @@
+.login {
+  height: 350px;
+  width: 350px;
+  position: relative;
+  padding: 50px 35px;
+  /* From https://css.glass */
+  background: rgb(255, 255, 255);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(9.8px);
+  -webkit-backdrop-filter: blur(9.8px);
+  border: 1px solid rgba(100, 95, 95, 0.07);
+}
+
+.backIcon {
+  position: absolute;
+  cursor: pointer;
+  border-radius: 100%;
+}
+
+.backIcon:hover {
+  background-color: #dedbdbe7;
+}
+
+.caption {
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 42px;
+  text-align: center;
+}
+
+input[type="text"],
+[type="password"] {
+  width: 100%;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  height: 50px;
+  margin-top: 15px;
+  color: #080710;
+  background-color: white;
+  /* background-image: url('searchicon.png'); */
+  background-position: 10px 10px;
+  background-repeat: no-repeat;
+  padding: 12px 20px 12px 12px;
+}
+
+input::placeholder {
+  color: #0303038e;
+}
+
+.button {
+  margin-top: 45px;
+  width: 100%;
+  background-color: #383737;
+  color: rgb(255, 255, 255);
+  padding: 15px 0;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #262626;
+}
