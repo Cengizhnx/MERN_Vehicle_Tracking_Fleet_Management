@@ -4,7 +4,7 @@ function Dashboard() {
   return (
     <div>
       <main className="w-full flex-grow p-6">
-        <h1 className="text-3xl text-black pb-6">Dashboard</h1>
+        <h1 className="text-3xl text-black">Dashboard</h1>
 
         <div className="flex flex-wrap mt-6">
           <div className="w-full lg:w-1/2 pr-0 lg:pr-2">

@@ -14,11 +14,11 @@ function Home() {
   const user = useSelector((state) => state.users.user);
   console.log(user.username);
 
-  const handleLogout = () => {
-    localStorage.removeItem("user");
-    dispatch(logout());
-    navigate("/login");
-  };
+  // const handleLogout = () => {
+  //   localStorage.removeItem("user");
+  //   dispatch(logout());
+  //   navigate("/login");
+  // };
 
   return (
     <div className="bg-gray-100 font-family-karla flex">
