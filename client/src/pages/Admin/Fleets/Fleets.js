@@ -10,6 +10,7 @@ function Fleets() {
   const { data, loading, error, reFetchUser } = useFetch(
     "/fleet/getAllFleets"
   );
+  
   return (
     <div className="bg-gray-100 font-family-karla flex">
       <Navbar></Navbar>

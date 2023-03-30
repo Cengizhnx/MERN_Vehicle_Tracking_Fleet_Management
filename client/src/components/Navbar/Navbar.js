@@ -1,7 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function Navbar() {
+  const user = useSelector((state) => state.users.user);
+
   return (
     <div>
       <aside className="relative bg-sidebar h-screen w-64 hidden sm:block shadow-xl">
@@ -10,7 +13,7 @@ function Navbar() {
             className="text-white text-3xl font-semibold uppercase hover:text-gray-300"
             to="/"
           >
-            Admin
+            {user.name}
           </Link>
           <button className="w-full bg-white cta-btn font-semibold py-2 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
             <i className="fas fa-plus mr-3"></i> New Report
@@ -31,27 +34,31 @@ function Navbar() {
             <i className="fas fa-building mr-3"></i>
             Filolar
           </Link>
-          <Link
-            className="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item"
-            to="/customers"
-          >
-            <i className="fas fa-users mr-3"></i>
-            Müşteriler
-          </Link>
-          <Link
-            className="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item"
-            to="/add-fleet"
-          >
-            <i className="fas fa-table mr-3"></i>
-            Filo Ekle
-          </Link>
-          <Link
-            className="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item"
-            to="/add-customer"
-          >
-            <i className="fas fa-user-plus mr-3"></i>
-            Müşteri Ekle
-          </Link>
+          {user.name === "admin" && (
+            <>
+              <Link
+                className="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item"
+                to="/customers"
+              >
+                <i className="fas fa-users mr-3"></i>
+                Müşteriler
+              </Link>
+              <Link
+                className="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item"
+                to="/add-fleet"
+              >
+                <i className="fas fa-table mr-3"></i>
+                Filo Ekle
+              </Link>
+              <Link
+                className="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item"
+                to="/add-customer"
+              >
+                <i className="fas fa-user-plus mr-3"></i>
+                Müşteri Ekle
+              </Link>
+            </>
+          )}
 
           <a
             href="forms.html"

@@ -1,16 +1,17 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import Admin from "../models/Admin.js";
+import Customer from "../models/Customer.js";
 import { createError } from "../utils/error.js";
 
 export const register = async (req, res, next) => {
   try {
-    const { username, password } = req.body;
+    const { email, password } = req.body;
 
     const salt = await bcrypt.genSalt();
     const passwordHash = await bcrypt.hash(password, salt);
-    const newUser = new Admin({
-      username,
+    const newUser = new Customer({
+      email,
       password: passwordHash,
     });
 
@@ -23,8 +24,8 @@ export const register = async (req, res, next) => {
 
 export const login = async (req, res, next) => {
   try {
-    const user = await Admin.findOne({
-      username: req.body.username,
+    const user = await Customer.findOne({
+      email: req.body.email,
     });
     if (!user) {
       return next(createError(404, "User not found!"));
@@ -39,7 +40,7 @@ export const login = async (req, res, next) => {
     }
 
     const token = jwt.sign({ user: user }, process.env.JWT);
-    
+
     res.json({ message: "Welcome Back", token: token });
 
     // const { password, ...otherDetails } = user._doc;

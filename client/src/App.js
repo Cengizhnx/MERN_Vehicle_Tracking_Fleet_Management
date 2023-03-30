@@ -23,10 +23,10 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={user ? <Home /> : <Navigate to="/login" />}></Route>
-        <Route path="/add-customer" element={user ? <AddCustomer /> : <Navigate to="/login" />}></Route>
-        <Route path="/customers" element={user ? <Customers /> : <Navigate to="/login" />}></Route>
-        <Route path="/edit-customer/:id" element={user ? <EditCustomer /> : <Navigate to="/login" />}></Route>
-        <Route path="/add-fleet" element={user ? <AddFleet /> : <Navigate to="/login" />}></Route>
+        <Route path="/add-customer" element={user.name === "admin" ? <AddCustomer /> : <Navigate to="/login" />}></Route>
+        <Route path="/customers" element={user.name === "admin" ? <Customers /> : <Navigate to="/login" />}></Route>
+        <Route path="/edit-customer/:id" element={user.name === "admin" ? <EditCustomer /> : <Navigate to="/login" />}></Route>
+        <Route path="/add-fleet" element={user.name === "admin" ? <AddFleet /> : <Navigate to="/login" />}></Route>
         <Route path="/fleets" element={user ? <Fleets /> : <Navigate to="/login" />}></Route>
         <Route path="/edit-fleet/:id" element={user ? <EditFleet /> : <Navigate to="/login" />}></Route>
         <Route path="/login" element={!user ? <Login /> : <Navigate to="/" />}></Route>
