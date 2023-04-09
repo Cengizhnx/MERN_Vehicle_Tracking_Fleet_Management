@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import authRouter from "./routes/auth.js";
 import customerRouter from "./routes/customer.js";
 import fleetRouter from "./routes/fleet.js";
+import routeRouter from "./routes/route.js";
 
 dotenv.config();
 
@@ -33,6 +34,7 @@ app.use(cors());
 app.use("/auth", authRouter);
 app.use("/customer", customerRouter);
 app.use("/fleet", fleetRouter);
+app.use("/route", routeRouter);
 
 app.listen(3001, () => {
   connect();

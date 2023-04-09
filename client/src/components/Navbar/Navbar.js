@@ -27,15 +27,16 @@ function Navbar() {
             <i className="fas fa-home mr-3"></i>
             Ana Sayfa
           </Link>
-          <Link
-            className="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item"
-            to="/fleets"
-          >
-            <i className="fas fa-building mr-3"></i>
-            Filolar
-          </Link>
+
           {user.name === "admin" && (
             <>
+              <Link
+                className="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item"
+                to="/add-customer"
+              >
+                <i className="fas fa-user-plus mr-3"></i>
+                Müşteri Ekle
+              </Link>
               <Link
                 className="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item"
                 to="/customers"
@@ -50,17 +51,31 @@ function Navbar() {
                 <i className="fas fa-table mr-3"></i>
                 Filo Ekle
               </Link>
-              <Link
-                className="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item"
-                to="/add-customer"
-              >
-                <i className="fas fa-user-plus mr-3"></i>
-                Müşteri Ekle
-              </Link>
             </>
           )}
+          <Link
+            className="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item"
+            to="/fleets"
+          >
+            <i className="fas fa-building mr-3"></i>
+            Filolar
+          </Link>
+          <Link
+            className="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item"
+            to="/add-route"
+          >
+            <i className="fas fa-route mr-3"></i>
+            Rota Ekle
+          </Link>
+          <Link
+            className="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item"
+            to="/routes"
+          >
+            <i className="fas fa-road mr-3"></i>
+            Rotalar
+          </Link>
 
-          <a
+          {/* <a
             href="forms.html"
             className="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item"
           >
@@ -80,7 +95,7 @@ function Navbar() {
           >
             <i className="fas fa-calendar mr-3"></i>
             Calendar
-          </a>
+          </a> */}
         </nav>
         <a
           href="/"

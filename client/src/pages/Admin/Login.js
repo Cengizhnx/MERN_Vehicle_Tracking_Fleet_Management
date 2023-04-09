@@ -24,6 +24,7 @@ export default function Login() {
     try {
       const res = await axios.post("/auth/login", user);
       const decoded = jwt_decode(res.data.token);
+      console.log(decoded);
       localStorage.setItem("user", JSON.stringify(decoded.user));
       dispatch(login(decoded.user));
       navigate("/");

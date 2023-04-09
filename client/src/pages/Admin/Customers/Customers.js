@@ -11,6 +11,8 @@ function Customers() {
     "/customer/getAllCustomers"
   );
 
+  const filtered = data.filter((item) => item.name !== "admin");
+
   return (
     <div className="bg-gray-100 font-family-karla flex">
       <Navbar></Navbar>
@@ -27,7 +29,7 @@ function Customers() {
             ) : (
               <>
                 <h1 className="text-2xl text-black ">
-                  Müşteriler ({data.length})
+                  Müşteriler ({filtered.length})
                 </h1>
                 <Table data={data} reFetchUser={reFetchUser}></Table>
               </>

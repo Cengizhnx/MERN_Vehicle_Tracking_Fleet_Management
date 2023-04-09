@@ -3,16 +3,22 @@ import { createError } from "../utils/error.js";
 
 export const addFleet = async (req, res, next) => {
   try {
-    const { fleetOwner, fleetName, fleetAddress, status } = req.body;
+    const { fleetOwner, fleetName, fleetAddress, fleetCars, status } = req.body;
 
     const newFleet = new Fleet({
       fleetOwner,
       fleetName,
       fleetAddress,
+      fleetCars,
       status,
     });
 
-    if (!newFleet.fleetOwner || !newFleet.fleetName || !newFleet.fleetAddress) {
+    if (
+      !newFleet.fleetOwner ||
+      !newFleet.fleetName ||
+      !newFleet.fleetAddress ||
+      !newFleet.fleetCars
+    ) {
       res.status(401).json("Tüm alanları doldurun !");
       return next(createError(401, "Fill in all fields!"));
     }
@@ -43,12 +49,13 @@ export const getFleet = async (req, res, next) => {
 };
 
 export const updateFleet = async (req, res, next) => {
-  const { fleetOwner, fleetName, fleetAddress, status } = req.body;
+  const { fleetOwner, fleetName, fleetAddress, fleetCars, status } = req.body;
 
   const updateFleet = {
     fleetOwner: fleetOwner,
     fleetName: fleetName,
     fleetAddress: fleetAddress,
+    fleetCars: fleetCars,
     status: status,
   };
 

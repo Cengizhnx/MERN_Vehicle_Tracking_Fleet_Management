@@ -14,6 +14,9 @@ const fleetSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    fleetCars: {
+
+    },
     status: {
       default: "active",
       type: String,

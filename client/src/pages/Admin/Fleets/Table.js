@@ -4,15 +4,15 @@ import { Link } from "react-router-dom";
 import { toast, Toaster } from "react-hot-toast";
 import useFetch from "../../../hooks/useFetch";
 import Loading from "../../../components/Loading/Loading";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { allCustomers } from "../../../redux/customerSlice";
 
 function Table({ fleets, reFetchUser }) {
-  const { data, loading, error } = useFetch(
-    `/customer/getAllCustomers`
-  );
+  const { data, loading, error } = useFetch(`/customer/getAllCustomers`);
 
   const dispatch = useDispatch();
+
+  const user = useSelector((state) => state.users.user);
 
   if (!loading) {
     dispatch(allCustomers(data));
@@ -58,68 +58,135 @@ function Table({ fleets, reFetchUser }) {
                   <th className="py-4 px-8 text-left">Sahibi</th>
                   <th className="py-4 px-8 text-left">Adı</th>
                   <th className="py-4 px-8 text-center">Adresi</th>
+                  <th className="py-4 px-8 text-center">Araç Sayısı</th>
                   <th className="py-4 px-8 text-center">Durum</th>
                   <th className="py-4 px-8 text-center">İşlemler</th>
                 </tr>
               </thead>
               <tbody className="text-gray-600 text-sm font-light">
-                {fleets.map((item) => (
-                  <tr
-                    key={item._id}
-                    className="border-b border-gray-200 hover:bg-gray-100"
-                  >
-                    <td className="py-4 px-8 text-left">
-                      <span>
-                        {data.map((i) =>
-                          i._id === item.fleetOwner ? i.name : ""
-                        )}
-                      </span>
-                    </td>
-                    <td className="py-4 px-8 text-left">
-                      <span>{item.fleetName}</span>
-                    </td>
-                    <td className="py-4 px-8 text-center">
-                      <span>{item.fleetAddress}</span>
-                    </td>
-                    <td className="py-4 px-8 text-center">
-                      {item.status === "active" ? (
-                        <span className="bg-blue-200 text-blue-600 py-1 px-3 rounded-full text-sm">
-                          Aktif
-                        </span>
-                      ) : (
-                        <span class="bg-red-200 text-red-600 py-1 px-3 rounded-full text-sm">
-                          Pasif
-                        </span>
-                      )}
-                    </td>
-                    <td className="py-4 px-8 text-center">
-                      <div className="flex item-center justify-center">
-                        <Link
-                          onClick={() => handleEditFleet(item)}
-                          className="w-4 mr-2 transform hover:text-blue-500 hover:scale-110 cursor:pointer"
-                        >
+                {fleets.map((item) =>
+                  user.name !== "admin" ? (
+                    item.fleetOwner === user._id && (
+                      <tr
+                        key={item._id}
+                        className="border-b border-gray-200 hover:bg-gray-100"
+                      >
+                        <td className="py-4 px-8 text-left">
+                          <span>
+                            {data.map((i) =>
+                              i._id === item.fleetOwner ? i.name : ""
+                            )}
+                          </span>
+                        </td>
+                        <td className="py-4 px-8 text-left">
+                          <span>{item.fleetName}</span>
+                        </td>
+                        <td className="py-4 px-8 text-center">
+                          <span>{item.fleetAddress}</span>
+                        </td>
+                        <td className="py-4 px-8 text-center">
+                          <span>{item.fleetCars.length}</span>
+                        </td>
+                        <td className="py-4 px-8 text-center">
                           {item.status === "active" ? (
-                            <i className="fas fa-ban"></i>
+                            <span className="bg-blue-200 text-blue-600 py-1 px-3 rounded-full text-sm">
+                              Aktif
+                            </span>
                           ) : (
-                            <i class="fas fa-check"></i>
+                            <span class="bg-red-200 text-red-600 py-1 px-3 rounded-full text-sm">
+                              Pasif
+                            </span>
                           )}
-                        </Link>
-                        <Link
-                          to={`/edit-fleet/${item._id}`}
-                          className="w-4 mr-2 transform hover:text-green-500 hover:scale-110 cursor:pointer"
-                        >
-                          <i className="fas fa-pen"></i>
-                        </Link>
-                        <Link
-                          onClick={() => handleDeleteFleet(item)}
-                          className="w-4 mr-2 transform hover:text-red-500 hover:scale-110 cursor:pointer"
-                        >
-                          <i className="fas fa-trash-alt"></i>
-                        </Link>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
+                        </td>
+                        <td className="py-4 px-8 text-center">
+                          <div className="flex item-center justify-center">
+                            <Link
+                              onClick={() => handleEditFleet(item)}
+                              className="w-4 mr-2 transform hover:text-blue-500 hover:scale-110 cursor:pointer"
+                            >
+                              {item.status === "active" ? (
+                                <i className="fas fa-ban"></i>
+                              ) : (
+                                <i class="fas fa-check"></i>
+                              )}
+                            </Link>
+                            <Link
+                              to={`/edit-fleet/${item._id}`}
+                              className="w-4 mr-2 transform hover:text-green-500 hover:scale-110 cursor:pointer"
+                            >
+                              <i className="fas fa-pen"></i>
+                            </Link>
+                            <Link
+                              onClick={() => handleDeleteFleet(item)}
+                              className="w-4 mr-2 transform hover:text-red-500 hover:scale-110 cursor:pointer"
+                            >
+                              <i className="fas fa-trash-alt"></i>
+                            </Link>
+                          </div>
+                        </td>
+                      </tr>
+                    )
+                  ) : (
+                    <tr
+                      key={item._id}
+                      className="border-b border-gray-200 hover:bg-gray-100"
+                    >
+                      <td className="py-4 px-8 text-left">
+                        <span>
+                          {data.map((i) =>
+                            i._id === item.fleetOwner ? i.name : ""
+                          )}
+                        </span>
+                      </td>
+                      <td className="py-4 px-8 text-left">
+                        <span>{item.fleetName}</span>
+                      </td>
+                      <td className="py-4 px-8 text-center">
+                        <span>{item.fleetAddress}</span>
+                      </td>
+                      <td className="py-4 px-8 text-center">
+                        <span>{item.fleetCars.length}</span>
+                      </td>
+                      <td className="py-4 px-8 text-center">
+                        {item.status === "active" ? (
+                          <span className="bg-blue-200 text-blue-600 py-1 px-3 rounded-full text-sm">
+                            Aktif
+                          </span>
+                        ) : (
+                          <span class="bg-red-200 text-red-600 py-1 px-3 rounded-full text-sm">
+                            Pasif
+                          </span>
+                        )}
+                      </td>
+                      <td className="py-4 px-8 text-center">
+                        <div className="flex item-center justify-center">
+                          <Link
+                            onClick={() => handleEditFleet(item)}
+                            className="w-4 mr-2 transform hover:text-blue-500 hover:scale-110 cursor:pointer"
+                          >
+                            {item.status === "active" ? (
+                              <i className="fas fa-ban"></i>
+                            ) : (
+                              <i class="fas fa-check"></i>
+                            )}
+                          </Link>
+                          <Link
+                            to={`/edit-fleet/${item._id}`}
+                            className="w-4 mr-2 transform hover:text-green-500 hover:scale-110 cursor:pointer"
+                          >
+                            <i className="fas fa-pen"></i>
+                          </Link>
+                          <Link
+                            onClick={() => handleDeleteFleet(item)}
+                            className="w-4 mr-2 transform hover:text-red-500 hover:scale-110 cursor:pointer"
+                          >
+                            <i className="fas fa-trash-alt"></i>
+                          </Link>
+                        </div>
+                      </td>
+                    </tr>
+                  )
+                )}
               </tbody>
             </table>
           </div>
