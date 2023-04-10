@@ -6,6 +6,7 @@ import authRouter from "./routes/auth.js";
 import customerRouter from "./routes/customer.js";
 import fleetRouter from "./routes/fleet.js";
 import routeRouter from "./routes/route.js";
+import mailRouter from "./routes/mail.js";
 
 dotenv.config();
 
@@ -35,6 +36,7 @@ app.use("/auth", authRouter);
 app.use("/customer", customerRouter);
 app.use("/fleet", fleetRouter);
 app.use("/route", routeRouter);
+app.use("/mail", mailRouter);
 
 app.listen(3001, () => {
   connect();

@@ -33,7 +33,7 @@ function Table({ routes, reFetchUser }) {
       {loading && carLoading && <Loading></Loading>}
       {!loading && !carLoading && (
         <div className="w-full">
-          {modal && <Modal fleet={filtered} car={car}></Modal>}
+          {modal && <Modal car={car}></Modal>}
           <div className="bg-white shadow-md rounded my-6">
             <table className="min-w-max w-full table-auto">
               <thead>

@@ -55,14 +55,23 @@ function AddRoute() {
     route.car_id = car.id;
     route.driver_id = driver.id;
 
+    let email = user.email;
+    let name = user.name;
+    let mailUser = {
+      email,
+      name,
+    };
+
     try {
       await axios.post("/route/addRoute", route);
+      await axios.post("/mail/sendMail", mailUser);
       // toast.success("Rota oluşturuldu !");
       navigate("/routes");
     } catch (error) {
       toast.error(error.response.data);
     }
   };
+
   return (
     <div className="bg-gray-100 font-family-karla flex">
       <Navbar></Navbar>

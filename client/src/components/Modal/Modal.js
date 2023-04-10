@@ -3,12 +3,11 @@ import "./style.css";
 import { useDispatch, useSelector } from "react-redux";
 import { visibilityChange } from "../../redux/modalSlice";
 import drivers from "../../data/drivers.json";
-import moment from 'moment';
+import moment from "moment";
 
-export default function Modal({ fleet, car }) {
+export default function Modal({ car }) {
   const dispatch = useDispatch();
 
-  const user = useSelector((state) => state.users.user);
   const route = useSelector((state) => state.routes.route);
 
   console.log([route]);
