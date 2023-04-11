@@ -74,7 +74,7 @@ export default function Modal({ car }) {
                               Hareket Zamanı
                             </h2>
                             <p class="mt-2 font-wider font-semibold">
-                              {moment(route.createdAt).format("DD.MM.YYYY")}
+                              {moment(route.createdAt).format("H:mm - DD.MM.YYYY")}
                             </p>
                           </div>
                         </div>

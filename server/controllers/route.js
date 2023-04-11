@@ -38,7 +38,7 @@ export const addRoute = async (req, res, next) => {
     }
 
     const savedRoute = await newRoute.save();
-    res.status(201).json(savedRoute);
+    res.status(200).json(savedRoute);
   } catch (err) {
     next(err);
   }

@@ -55,15 +55,15 @@ function AddRoute() {
     route.car_id = car.id;
     route.driver_id = driver.id;
 
-    let email = user.email;
-    let name = user.name;
-    let mailUser = {
-      email,
-      name,
-    };
-
     try {
-      await axios.post("/route/addRoute", route);
+      const res = await axios.post("/route/addRoute", route);
+      let mailUser = {
+        email: user.email,
+        name: user.name,
+        route: res.data,
+        car: car,
+        driver: driver,
+      };
       await axios.post("/mail/sendMail", mailUser);
       // toast.success("Rota oluşturuldu !");
       navigate("/routes");
