@@ -83,7 +83,7 @@ function AddRoute() {
 
         {!loading && (
           <div className="w-full overflow-x-hidden border-t flex flex-col">
-            <main className="w-full flex-grow p-6">
+            <main className="w-full flex-grow px-6">
               <div className="flex flex-wrap">
                 {/* Route */}
                 <div className="w-full mt-6 pl-0 lg:pl-2">
@@ -139,7 +139,7 @@ function AddRoute() {
                   </div>
                 </div>
               </div>
-              <div className="flex flex-wrap mt-7">
+              <div className="flex flex-wrap mt-3">
                 {/* Fleet */}
                 <div className="w-full lg:w-1/3 mt-6 pl-0 lg:pl-2">
                   <p className="text-xl flex items-center py-2">
@@ -165,7 +165,8 @@ function AddRoute() {
                             </option>
                             {data.map(
                               (item) =>
-                                item.fleetOwner === user._id && (
+                                item.fleetOwner === user._id &&
+                                item.status === "active" && (
                                   <option
                                     value={item._id}
                                     key={item._id}

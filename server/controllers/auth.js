@@ -27,16 +27,22 @@ export const login = async (req, res, next) => {
     const user = await Customer.findOne({
       email: req.body.email,
     });
+
     if (!user) {
-      return next(createError(404, "User not found!"));
+      res.status(401).json("Böyle bir kullanıcı yok !");
+    }
+
+    if (user.status === "passive") {
+      res.status(404).json("Hesabınız aktif değil !");
     }
 
     const isPasswordCorrect = await bcrypt.compare(
       req.body.password,
       user.password
     );
+
     if (!isPasswordCorrect) {
-      return next(createError(400, "Wrong password or email!"));
+      res.status(401).json("Hatalı e-mail veya şifre !");
     }
 
     const token = jwt.sign({ user: user }, process.env.JWT);

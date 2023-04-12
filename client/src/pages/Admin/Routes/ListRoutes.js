@@ -33,7 +33,7 @@ function ListRoutes() {
               ) : (
                 <>
                   <h1 className="text-2xl text-black ">
-                    Filolar ({data.length})
+                    Rotalar ({data.length})
                   </h1>
                   <Table routes={data} reFetchUser={reFetchUser}></Table>
                 </>

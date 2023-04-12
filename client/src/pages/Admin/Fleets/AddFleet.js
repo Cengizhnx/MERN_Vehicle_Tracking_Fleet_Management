@@ -87,7 +87,8 @@ function AddFleet() {
                             Filo sahibini seçin
                           </option>
                           {data.map((item) =>
-                            item.name !== "admin" ? (
+                            item.name !== "admin" &&
+                            item.status === "active" ? (
                               <option value={item._id} key={item._id}>
                                 {item.name}
                               </option>
