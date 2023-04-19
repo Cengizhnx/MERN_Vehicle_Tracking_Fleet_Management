@@ -1,5 +1,6 @@
 import React from "react";
 import useFetch from "../../hooks/useFetch";
+import CountUp from "react-countup";
 
 function FleetCard() {
   const { data, loading, error, reFetchUser } = useFetch("/fleet/getAllFleets");
@@ -23,8 +24,11 @@ function FleetCard() {
           </div>
         </div>
       </div>
-      <div>
-        <div class="font-bold text-5xl text-center">{filtered.length}</div>
+      <div className="text-center">
+        <CountUp
+          className="font-bold text-5xl text-center"
+          end={filtered.length}
+        ></CountUp>{" "}
         <div class="font-bold text-sm">Filo</div>
       </div>
     </div>

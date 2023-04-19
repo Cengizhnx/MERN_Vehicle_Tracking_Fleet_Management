@@ -45,7 +45,7 @@ function AddCustomer() {
       <div className="w-full flex flex-col h-screen overflow-y-hidden">
         <Header></Header>
         <div className="w-full overflow-x-hidden border-t flex flex-col">
-          <main className="w-full flex-grow p-6">
+          <main className="w-full flex-grow px-6">
             <div className="flex flex-wrap">
               {/* Customer */}
               <div className="w-full lg:w-1/2 mt-6 pl-0 lg:pl-2">

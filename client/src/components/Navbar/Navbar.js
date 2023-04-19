@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 
 function Navbar() {
   const user = useSelector((state) => state.users.user);
-
+  console.log(window.location.pathname);
   return (
     <div>
       <aside className="relative bg-sidebar h-screen w-64 hidden sm:block shadow-xl">
@@ -21,7 +21,9 @@ function Navbar() {
         </div>
         <nav className="text-white text-base font-semibold pt-3">
           <Link
-            className="flex items-center active-nav-link text-white py-4 pl-6 nav-item"
+            className={`flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item ${
+              window.location.pathname === "/" && "active-nav-link opacity-100"
+            }`}
             to="/"
           >
             <i className="fas fa-home mr-3"></i>
@@ -31,21 +33,30 @@ function Navbar() {
           {user.name === "admin" && (
             <>
               <Link
-                className="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item"
+                className={`flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item ${
+                  window.location.pathname === "/add-customer" &&
+                  "active-nav-link opacity-100"
+                }`}
                 to="/add-customer"
               >
                 <i className="fas fa-user-plus mr-3"></i>
                 Müşteri Ekle
               </Link>
               <Link
-                className="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item"
+                className={`flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item ${
+                  window.location.pathname === "/customers" &&
+                  "active-nav-link opacity-100"
+                }`}
                 to="/customers"
               >
                 <i className="fas fa-users mr-3"></i>
                 Müşteriler
               </Link>
               <Link
-                className="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item"
+                className={`flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item ${
+                  window.location.pathname === "/add-fleet" &&
+                  "active-nav-link opacity-100"
+                }`}
                 to="/add-fleet"
               >
                 <i className="fas fa-table mr-3"></i>
@@ -54,21 +65,30 @@ function Navbar() {
             </>
           )}
           <Link
-            className="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item"
+            className={`flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item ${
+              window.location.pathname === "/fleets" &&
+              "active-nav-link opacity-100"
+            }`}
             to="/fleets"
           >
             <i className="fas fa-building mr-3"></i>
             Filolar
           </Link>
           <Link
-            className="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item"
+            className={`flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item ${
+              window.location.pathname === "/add-route" &&
+              "active-nav-link opacity-100"
+            }`}
             to="/add-route"
           >
             <i className="fas fa-route mr-3"></i>
             Rota Ekle
           </Link>
           <Link
-            className="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item"
+            className={`flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item ${
+              window.location.pathname === "/routes" &&
+              "active-nav-link opacity-100"
+            }`}
             to="/routes"
           >
             <i className="fas fa-road mr-3"></i>

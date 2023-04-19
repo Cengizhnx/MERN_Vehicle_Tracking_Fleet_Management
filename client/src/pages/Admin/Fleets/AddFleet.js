@@ -62,7 +62,7 @@ function AddFleet() {
           {loading && <Loading></Loading>}
 
           {!loading && (
-            <main className="w-full flex-grow p-6">
+            <main className="w-full flex-grow p-4">
               <div className="flex flex-wrap">
                 {/* Fleet */}
                 <div className="w-full lg:w-1/2 mt-6 pl-0 lg:pl-2">

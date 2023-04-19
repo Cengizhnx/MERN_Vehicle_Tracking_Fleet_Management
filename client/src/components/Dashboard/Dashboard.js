@@ -15,7 +15,7 @@ function Dashboard() {
           </>
         )}
 
-        <div className="w-full mt-12">
+        {/* <div className="w-full mt-12">
           <p className="text-xl pb-3 flex items-center">
             <i className="fas fa-list mr-3"></i> Latest Reports
           </p>
@@ -177,7 +177,7 @@ function Dashboard() {
               </tbody>
             </table>
           </div>
-        </div>
+        </div> */}
       </main>
     </div>
   );

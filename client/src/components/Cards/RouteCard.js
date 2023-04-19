@@ -1,5 +1,6 @@
 import React from "react";
 import useFetch from "../../hooks/useFetch";
+import CountUp from "react-countup";
 
 function RouteCard() {
   const { data } = useFetch("/route/getAllRoutes");
@@ -22,8 +23,11 @@ function RouteCard() {
           </div>
         </div>
       </div>
-      <div>
-        <div class="font-bold text-5xl text-center">{filtered.length}</div>
+      <div className="text-center">
+        <CountUp
+          className="font-bold text-5xl text-center"
+          end={filtered.length}
+        ></CountUp>{" "}
         <div class="font-bold text-sm">Rota</div>
       </div>
     </div>
