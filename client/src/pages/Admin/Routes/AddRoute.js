@@ -64,6 +64,7 @@ function AddRoute() {
         route: res.data,
         car: car,
         driver: driver,
+        type: "addRoute",
       };
       await axios.post("/mail/sendMail", mailUser);
       // toast.success("Rota oluşturuldu !");
@@ -195,12 +196,12 @@ function AddRoute() {
                 </div>
 
                 {fleet && (
-                  <div className="w-full lg:w-1/3 pl-0 lg:pl-2">
+                  <div className="w-full lg:w-1/3 mt-6 pl-0 lg:pl-2">
                     <p className="text-xl flex items-center py-2">
                       <i className="fas fa-address-card mr-3"></i> Araç
                       Bilgileri{" "}
                     </p>
-                    <div className="w-full lg:w-full mt-6 pl-0 lg:pl-2">
+                    <div className="w-full pl-0 lg:pl-2">
                       <div className="leading-loose">
                         <form className="p-10 bg-white h-52 rounded shadow-xl">
                           <div>
@@ -243,12 +244,12 @@ function AddRoute() {
                 )}
 
                 {car && (
-                  <div className="w-full lg:w-1/3 pl-0 lg:pl-2">
+                  <div className="w-full lg:w-1/3 mt-6 pl-0 lg:pl-2">
                     <p className="text-xl flex items-center py-2">
                       <i className="fas fa-address-card mr-3"></i> Şöfor
                       Bilgileri{" "}
                     </p>
-                    <div className="w-full lg:w-full mt-6 pl-0 lg:pl-2">
+                    <div className="w-full pl-0 lg:pl-2">
                       <div className="leading-loose">
                         <form className="p-10 bg-white h-52 rounded shadow-xl">
                           <div>

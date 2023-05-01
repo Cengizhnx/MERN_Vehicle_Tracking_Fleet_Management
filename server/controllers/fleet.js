@@ -24,7 +24,7 @@ export const addFleet = async (req, res, next) => {
     }
 
     const savedFleet = await newFleet.save();
-    res.status(201).json(savedFleet);
+    res.status(200).json(savedFleet);
   } catch (err) {
     next(err);
   }

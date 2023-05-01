@@ -1,10 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import useFetch from "../../hooks/useFetch";
+import { allCustomers } from "../../redux/customerSlice";
 
 function Navbar() {
+  const { data, loading, error } = useFetch(`/customer/getAllCustomers`);
+
+  const dispatch = useDispatch();
+
+  if (!loading) {
+    dispatch(allCustomers(data));
+  }
+  
   const user = useSelector((state) => state.users.user);
-  console.log(window.location.pathname);
   return (
     <div>
       <aside className="relative bg-sidebar h-screen w-64 hidden sm:block shadow-xl">
@@ -74,16 +83,19 @@ function Navbar() {
             <i className="fas fa-building mr-3"></i>
             Filolar
           </Link>
-          <Link
-            className={`flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item ${
-              window.location.pathname === "/add-route" &&
-              "active-nav-link opacity-100"
-            }`}
-            to="/add-route"
-          >
-            <i className="fas fa-route mr-3"></i>
-            Rota Ekle
-          </Link>
+          {user.name !== "admin" && (
+            <Link
+              className={`flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item ${
+                window.location.pathname === "/add-route" &&
+                "active-nav-link opacity-100"
+              }`}
+              to="/add-route"
+            >
+              <i className="fas fa-route mr-3"></i>
+              Rota Ekle
+            </Link>
+          )}
+
           <Link
             className={`flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item ${
               window.location.pathname === "/routes" &&

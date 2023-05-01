@@ -40,7 +40,17 @@ function AddFleet() {
     e.preventDefault();
     fleet.fleetCars = tempCar;
     try {
-      await axios.post("/fleet/addFleet", fleet);
+      const filtered = await data.filter(
+        (item) => item._id === fleet.fleetOwner
+      );
+      const res = await axios.post("/fleet/addFleet", fleet);
+      let mailUser = {
+        email: filtered[0].email,
+        name: filtered[0].name,
+        route: res.data,
+        type: "addFleet",
+      };
+      await axios.post("/mail/sendMail", mailUser);
       navigate("/fleets");
     } catch (error) {
       toast.error(error.response.data);

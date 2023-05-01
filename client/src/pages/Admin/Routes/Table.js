@@ -17,7 +17,7 @@ function Table({ routes, reFetchUser }) {
   const { car, carLoading, carEror, reFetchCar } = useCarFetch();
 
   const user = useSelector((state) => state.users.user);
-
+  const customer = useSelector((state) => state.customers.customer);
   const modal = useSelector((state) => state.modals.modal);
 
   const dispatch = useDispatch();
@@ -147,22 +147,28 @@ function Table({ routes, reFetchUser }) {
   return (
     <div className="bg-gray-100 flex flex-col items-center justify-center font-sans overflow-auto">
       {loading && carLoading && <Loading></Loading>}
-      {!loading && !carLoading && (
+      {!loading && !carLoading && customer && (
         <>
-          <div className="w-full flex flex-col items-end justify-end">
-            <button
-              className="px-3 py-1 text-white font-light tracking-wider bg-green-500 rounded"
-              onClick={exportExcelFile}
-            >
-              <i class="fas fa-file-excel"></i>
-            </button>
-          </div>
+          {user.name !== "admin" && (
+            <div className="w-full flex flex-col items-end justify-end">
+              <button
+                className="px-3 py-1 text-white font-light tracking-wider bg-green-500 rounded"
+                onClick={exportExcelFile}
+              >
+                <i class="fas fa-file-excel"></i>
+              </button>
+            </div>
+          )}
+
           <div className="w-full">
             {modal && <Modal car={car}></Modal>}
             <div className="bg-white shadow-md rounded my-6">
               <table className="min-w-max w-full table-auto">
                 <thead>
                   <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                    {user.name === "admin" && (
+                      <th className="py-4 px-8 text-center">Sahibi</th>
+                    )}
                     <th className="py-4 px-8 text-center">Hareket Noktası</th>
                     <th className="py-4 px-8 text-center">Varış Noktası</th>
                     <th className="py-4 px-8 text-center">Araç</th>
@@ -173,142 +179,148 @@ function Table({ routes, reFetchUser }) {
                 </thead>
                 <tbody className="text-gray-600 text-sm font-light">
                   {routes.map((item) =>
-                    user.name !== "admin" ? (
-                      filtered.map(
-                        (i) =>
-                          item.fleet_id === i._id && (
-                            <tr
-                              key={item._id}
-                              className="border-b border-gray-200 hover:bg-gray-100"
-                            >
-                              <td className="py-4 px-8 text-center">
-                                <span>{item.starting}</span>
-                              </td>
-                              <td className="py-4 px-8 text-center">
-                                <span>{item.destination}</span>
-                              </td>
-                              <td className="py-4 px-8 text-center">
-                                {car.map(
-                                  (cars) =>
-                                    cars.id === item.car_id && (
-                                      <span key={cars.id}>
-                                        {cars.make} {"-"} {cars.model}
-                                      </span>
-                                    )
-                                )}
-                              </td>
-                              <td className="py-4 px-8 text-center">
-                                {drivers.map(
-                                  (driver) =>
-                                    driver.id === item.driver_id && (
-                                      <span key={driver.id}>
-                                        {driver.first_name} {driver.last_name}
-                                      </span>
-                                    )
-                                )}
-                              </td>
-                              <td className="py-4 px-8 text-center">
-                                {item.status === "active" ? (
-                                  <span className="bg-blue-200 text-blue-600 py-1 px-3 rounded-full text-sm">
-                                    Aktif
-                                  </span>
-                                ) : (
-                                  <span class="bg-red-200 text-red-600 py-1 px-3 rounded-full text-sm">
-                                    Pasif
-                                  </span>
-                                )}
-                              </td>
-                              <td className="py-4 px-8 text-center">
-                                <div className="flex item-center justify-center">
-                                  <Link
-                                    onClick={() => handleDetailRoute(item)}
-                                    className="w-4 mr-2 transform hover:text-blue-500 hover:scale-110 cursor:pointer"
-                                  >
-                                    <i class="fas fa-info-circle"></i>
-                                  </Link>
-                                  <Link
-                                    to={`/edit-fleet/${item._id}`}
-                                    className="w-4 mr-2 transform hover:text-green-500 hover:scale-110 cursor:pointer"
-                                  >
-                                    <i className="fas fa-pen"></i>
-                                  </Link>
-                                  <Link
-                                    // onClick={() => handleDeleteFleet(item)}
-                                    className="w-4 mr-2 transform hover:text-red-500 hover:scale-110 cursor:pointer"
-                                  >
-                                    <i className="fas fa-trash-alt"></i>
-                                  </Link>
-                                </div>
-                              </td>
-                            </tr>
-                          )
-                      )
-                    ) : (
-                      <tr
-                        key={item._id}
-                        className="border-b border-gray-200 hover:bg-gray-100"
-                      >
-                        <td className="py-4 px-8 text-center">
-                          <span>{item.starting}</span>
-                        </td>
-                        <td className="py-4 px-8 text-center">
-                          <span>{item.destination}</span>
-                        </td>
-                        <td className="py-4 px-8 text-center">
-                          {car.map(
-                            (cars) =>
-                              cars.id === item.car_id && (
-                                <span key={cars.id}>
-                                  {cars.make} {"-"} {cars.model}
-                                </span>
-                              )
-                          )}
-                        </td>
-                        <td className="py-4 px-8 text-center">
-                          {drivers.map(
-                            (driver) =>
-                              driver.id === item.driver_id && (
-                                <span key={driver.id}>
-                                  {driver.first_name} {driver.last_name}
-                                </span>
-                              )
-                          )}
-                        </td>
-                        <td className="py-4 px-8 text-center">
-                          {item.status === "active" ? (
-                            <span className="bg-blue-200 text-blue-600 py-1 px-3 rounded-full text-sm">
-                              Aktif
-                            </span>
-                          ) : (
-                            <span class="bg-red-200 text-red-600 py-1 px-3 rounded-full text-sm">
-                              Pasif
-                            </span>
-                          )}
-                        </td>
-                        <td className="py-4 px-8 text-center">
-                          <div className="flex item-center justify-center">
-                            <Link
-                              onClick={() => handleDetailRoute()}
-                              className="w-4 mr-2 transform hover:text-blue-500 hover:scale-110 cursor:pointer"
-                            >
-                              <i class="fas fa-info-circle"></i>
-                            </Link>
-                            <Link
-                              to={`/edit-fleet/${item._id}`}
-                              className="w-4 mr-2 transform hover:text-green-500 hover:scale-110 cursor:pointer"
-                            >
-                              <i className="fas fa-pen"></i>
-                            </Link>
-                            <Link
-                              // onClick={() => handleDeleteFleet(item)}
-                              className="w-4 mr-2 transform hover:text-red-500 hover:scale-110 cursor:pointer"
-                            >
-                              <i className="fas fa-trash-alt"></i>
-                            </Link>
-                          </div>
-                        </td>
-                      </tr>
-                    )
+                    user.name !== "admin"
+                      ? filtered.map(
+                          (i) =>
+                            item.fleet_id === i._id && (
+                              <tr
+                                key={item._id}
+                                className="border-b border-gray-200 hover:bg-gray-100"
+                              >
+                                <td className="py-4 px-8 text-center">
+                                  <span>{item.starting}</span>
+                                </td>
+                                <td className="py-4 px-8 text-center">
+                                  <span>{item.destination}</span>
+                                </td>
+                                <td className="py-4 px-8 text-center">
+                                  {car.map(
+                                    (cars) =>
+                                      cars.id === item.car_id && (
+                                        <span key={cars.id}>
+                                          {cars.make} {"-"} {cars.model}
+                                        </span>
+                                      )
+                                  )}
+                                </td>
+                                <td className="py-4 px-8 text-center">
+                                  {drivers.map(
+                                    (driver) =>
+                                      driver.id === item.driver_id && (
+                                        <span key={driver.id}>
+                                          {driver.first_name} {driver.last_name}
+                                        </span>
+                                      )
+                                  )}
+                                </td>
+                                <td className="py-4 px-8 text-center">
+                                  {item.status === "active" ? (
+                                    <span className="bg-blue-200 text-blue-600 py-1 px-3 rounded-full text-sm">
+                                      Aktif
+                                    </span>
+                                  ) : (
+                                    <span class="bg-red-200 text-red-600 py-1 px-3 rounded-full text-sm">
+                                      Pasif
+                                    </span>
+                                  )}
+                                </td>
+                                <td className="py-4 px-8 text-center">
+                                  <div className="flex item-center justify-center">
+                                    <Link
+                                      onClick={() => handleDetailRoute(item)}
+                                      className="w-4 mr-2 transform hover:text-blue-500 hover:scale-110 cursor:pointer"
+                                    >
+                                      <i class="fas fa-info-circle"></i>
+                                    </Link>
+                                    <Link
+                                      to={`/edit-fleet/${item._id}`}
+                                      className="w-4 mr-2 transform hover:text-green-500 hover:scale-110 cursor:pointer"
+                                    >
+                                      <i className="fas fa-pen"></i>
+                                    </Link>
+                                    <Link
+                                      // onClick={() => handleDeleteFleet(item)}
+                                      className="w-4 mr-2 transform hover:text-red-500 hover:scale-110 cursor:pointer"
+                                    >
+                                      <i className="fas fa-trash-alt"></i>
+                                    </Link>
+                                  </div>
+                                </td>
+                              </tr>
+                            )
+                        )
+                      : customer.map(
+                          (i) =>
+                            i._id === item.customer_id && (
+                              <tr
+                                key={item._id}
+                                className="border-b border-gray-200 hover:bg-gray-100"
+                              >
+                                <td className="py-4 px-8 text-center">
+                                  <span>{i.name}</span>
+                                </td>
+                                <td className="py-4 px-8 text-center">
+                                  <span>{item.starting}</span>
+                                </td>
+                                <td className="py-4 px-8 text-center">
+                                  <span>{item.destination}</span>
+                                </td>
+                                <td className="py-4 px-8 text-center">
+                                  {car.map(
+                                    (cars) =>
+                                      cars.id === item.car_id && (
+                                        <span key={cars.id}>
+                                          {cars.make} {"-"} {cars.model}
+                                        </span>
+                                      )
+                                  )}
+                                </td>
+                                <td className="py-4 px-8 text-center">
+                                  {drivers.map(
+                                    (driver) =>
+                                      driver.id === item.driver_id && (
+                                        <span key={driver.id}>
+                                          {driver.first_name} {driver.last_name}
+                                        </span>
+                                      )
+                                  )}
+                                </td>
+                                <td className="py-4 px-8 text-center">
+                                  {item.status === "active" ? (
+                                    <span className="bg-blue-200 text-blue-600 py-1 px-3 rounded-full text-sm">
+                                      Aktif
+                                    </span>
+                                  ) : (
+                                    <span class="bg-red-200 text-red-600 py-1 px-3 rounded-full text-sm">
+                                      Pasif
+                                    </span>
+                                  )}
+                                </td>
+                                <td className="py-4 px-8 text-center">
+                                  <div className="flex item-center justify-center">
+                                    <Link
+                                      onClick={() => handleDetailRoute(item)}
+                                      className="w-4 mr-2 transform hover:text-blue-500 hover:scale-110 cursor:pointer"
+                                    >
+                                      <i class="fas fa-info-circle"></i>
+                                    </Link>
+                                    <Link
+                                      to={`/edit-fleet/${item._id}`}
+                                      className="w-4 mr-2 transform hover:text-green-500 hover:scale-110 cursor:pointer"
+                                    >
+                                      <i className="fas fa-pen"></i>
+                                    </Link>
+                                    <Link
+                                      // onClick={() => handleDeleteFleet(item)}
+                                      className="w-4 mr-2 transform hover:text-red-500 hover:scale-110 cursor:pointer"
+                                    >
+                                      <i className="fas fa-trash-alt"></i>
+                                    </Link>
+                                  </div>
+                                </td>
+                              </tr>
+                            )
+                        )
                   )}
                 </tbody>
               </table>

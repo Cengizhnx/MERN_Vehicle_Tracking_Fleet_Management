@@ -1,6 +1,8 @@
 import React from "react";
 import Cards from "../Cards/Cards";
 import { useSelector } from "react-redux";
+import Charts from "../Charts/Charts";
+import CardCharts from "../Cards/CardCharts";
 
 function Dashboard() {
   const user = useSelector((state) => state.users.user);
@@ -12,7 +14,14 @@ function Dashboard() {
           <>
             <h1 className="text-3xl text-black">Dashboard</h1>
             <Cards></Cards>
+            <CardCharts></CardCharts>
           </>
+        )}
+
+        {user.name !== "admin" && (
+          <div className="w-full flex flex-row space-x-10 px-4">
+            <Charts></Charts>
+          </div>
         )}
 
         {/* <div className="w-full mt-12">
