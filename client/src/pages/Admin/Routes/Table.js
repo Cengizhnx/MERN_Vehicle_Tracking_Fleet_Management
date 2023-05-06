@@ -6,11 +6,15 @@ import Loading from "../../../components/Loading/Loading";
 import { useDispatch, useSelector } from "react-redux";
 import drivers from "../../../data/drivers.json";
 import useCarFetch from "../../../hooks/useCarFetch";
-import { visibilityChange } from "../../../redux/modalSlice";
+import {
+  visibilityChange,
+  visibilityChangeRouteModal,
+} from "../../../redux/modalSlice";
 import { addRoute } from "../../../redux/routeSlice";
 import Modal from "../../../components/Modal/Modal";
 import ExcelJS from "exceljs";
 import moment from "moment";
+import RouteModal from "../../../components/Modal/RouteModal";
 
 function Table({ routes, reFetchUser }) {
   const { data, loading, error } = useFetch(`/fleet/getAllFleets`);
@@ -19,6 +23,7 @@ function Table({ routes, reFetchUser }) {
   const user = useSelector((state) => state.users.user);
   const customer = useSelector((state) => state.customers.customer);
   const modal = useSelector((state) => state.modals.modal);
+  const routeModal = useSelector((state) => state.modals.routeModal);
 
   const dispatch = useDispatch();
 
@@ -27,6 +32,11 @@ function Table({ routes, reFetchUser }) {
   const handleDetailRoute = (route) => {
     dispatch(addRoute(route));
     dispatch(visibilityChange(true));
+  };
+
+  const handleDetailModalRoute = (route) => {
+    dispatch(addRoute(route));
+    dispatch(visibilityChangeRouteModal(true));
   };
 
   const exportExcelFile = () => {
@@ -162,6 +172,7 @@ function Table({ routes, reFetchUser }) {
 
           <div className="w-full">
             {modal && <Modal car={car}></Modal>}
+            {routeModal && <RouteModal reFetchUser={reFetchUser}></RouteModal>}
             <div className="bg-white shadow-md rounded my-6">
               <table className="min-w-max w-full table-auto">
                 <thead>
@@ -214,13 +225,19 @@ function Table({ routes, reFetchUser }) {
                                   )}
                                 </td>
                                 <td className="py-4 px-8 text-center">
-                                  {item.status === "active" ? (
+                                  {item.status === "active" && (
                                     <span className="bg-blue-200 text-blue-600 py-1 px-3 rounded-full text-sm">
-                                      Aktif
+                                      Yolda
                                     </span>
-                                  ) : (
+                                  )}
+                                  {item.status === "passive" && (
                                     <span class="bg-red-200 text-red-600 py-1 px-3 rounded-full text-sm">
-                                      Pasif
+                                      İptal Edildi
+                                    </span>
+                                  )}
+                                  {item.status === "completed" && (
+                                    <span class="bg-gray-200 text-gray-600 py-1 px-3 rounded-full text-sm">
+                                      Tamamlandı
                                     </span>
                                   )}
                                 </td>
@@ -233,17 +250,19 @@ function Table({ routes, reFetchUser }) {
                                       <i class="fas fa-info-circle"></i>
                                     </Link>
                                     <Link
-                                      to={`/edit-fleet/${item._id}`}
+                                      onClick={() =>
+                                        handleDetailModalRoute(item)
+                                      }
                                       className="w-4 mr-2 transform hover:text-green-500 hover:scale-110 cursor:pointer"
                                     >
                                       <i className="fas fa-pen"></i>
                                     </Link>
-                                    <Link
+                                    {/* <Link
                                       // onClick={() => handleDeleteFleet(item)}
                                       className="w-4 mr-2 transform hover:text-red-500 hover:scale-110 cursor:pointer"
                                     >
                                       <i className="fas fa-trash-alt"></i>
-                                    </Link>
+                                    </Link> */}
                                   </div>
                                 </td>
                               </tr>
@@ -286,13 +305,19 @@ function Table({ routes, reFetchUser }) {
                                   )}
                                 </td>
                                 <td className="py-4 px-8 text-center">
-                                  {item.status === "active" ? (
+                                  {item.status === "active" && (
                                     <span className="bg-blue-200 text-blue-600 py-1 px-3 rounded-full text-sm">
-                                      Aktif
+                                      Yolda
                                     </span>
-                                  ) : (
+                                  )}
+                                  {item.status === "passive" && (
                                     <span class="bg-red-200 text-red-600 py-1 px-3 rounded-full text-sm">
-                                      Pasif
+                                      İptal Edildi
+                                    </span>
+                                  )}
+                                  {item.status === "completed" && (
+                                    <span class="bg-gray-200 text-gray-600 py-1 px-3 rounded-full text-sm">
+                                      Tamamlandı
                                     </span>
                                   )}
                                 </td>
@@ -305,17 +330,19 @@ function Table({ routes, reFetchUser }) {
                                       <i class="fas fa-info-circle"></i>
                                     </Link>
                                     <Link
-                                      to={`/edit-fleet/${item._id}`}
+                                      onClick={() =>
+                                        handleDetailModalRoute(item)
+                                      }
                                       className="w-4 mr-2 transform hover:text-green-500 hover:scale-110 cursor:pointer"
                                     >
                                       <i className="fas fa-pen"></i>
                                     </Link>
-                                    <Link
+                                    {/* <Link
                                       // onClick={() => handleDeleteFleet(item)}
                                       className="w-4 mr-2 transform hover:text-red-500 hover:scale-110 cursor:pointer"
                                     >
                                       <i className="fas fa-trash-alt"></i>
-                                    </Link>
+                                    </Link> */}
                                   </div>
                                 </td>
                               </tr>

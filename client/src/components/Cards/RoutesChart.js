@@ -10,6 +10,7 @@ export function RoutesChart() {
 
   const activeRoutes = data.filter((item) => item.status === "active");
   const passiveRoutes = data.filter((item) => item.status === "passive");
+  const completedRoutes = data.filter((item) => item.status === "completed");
 
   const options = {
     responsive: true,
@@ -20,19 +21,33 @@ export function RoutesChart() {
       title: {
         display: true,
         text: `${
-          "Rota Durumları" + " - " + (activeRoutes.length + passiveRoutes.length)
+          "Rota Durumları" +
+          " - " +
+          (activeRoutes.length + passiveRoutes.length + completedRoutes.length)
         }`,
       },
     },
   };
   const data2 = {
-    labels: ["Yolda", "Tamamlandı"],
+    labels: ["Yolda", "Tamamlandı", "İptal Edildi"],
     datasets: [
       {
         label: " ",
-        data: [activeRoutes.length, passiveRoutes.length],
-        backgroundColor: ["rgba(75, 192, 192, 0.2)", "rgba(255, 99, 132, 0.2)"],
-        borderColor: ["rgba(75, 192, 192, 1)", "rgba(255, 99, 132, 1)"],
+        data: [
+          activeRoutes.length,
+          completedRoutes.length,
+          passiveRoutes.length,
+        ],
+        backgroundColor: [
+          "rgba(75, 192, 192, 0.2)",
+          'rgba(54, 162, 235, 0.2)',
+          "rgba(255, 99, 132, 0.2)",
+        ],
+        borderColor: [
+          "rgba(75, 192, 192, 1)",
+          'rgba(54, 162, 235, 1)',
+          "rgba(255, 99, 132, 1)",
+        ],
         borderWidth: 1,
       },
     ],

@@ -5,9 +5,11 @@ import CountUp from "react-countup";
 function CustomerCard() {
   const { data } = useFetch("/customer/getAllCustomers");
 
-  const filtered = data.filter(
-    (item) => item.name !== "admin" && item.status === "active"
-  );
+  // const filtered = data.filter(
+  //   (item) => item.name !== "admin" && item.status === "active"
+  // );
+
+  const filtered = data.filter((item) => item.name !== "admin");
 
   return (
     <div class="flex flex-wrap flex-row sm:flex-col justify-center items-center w-full sm:w-1/4 p-5 bg-white rounded-md shadow-xl border-l-4 border-r-4 border-blue-300">

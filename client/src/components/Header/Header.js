@@ -74,7 +74,7 @@ function Header() {
             href="/"
             className="text-white text-3xl font-semibold uppercase hover:text-gray-300"
           >
-            Admin
+            {user.name}
           </a>
           <button
             onClick={(prev) => setOpenNav((prevState) => !prevState)}
@@ -170,13 +170,13 @@ function Header() {
             Rotalar
           </Link>
 
-          <a
-            href="#"
+          <p
+            onClick={handleLogout}
             className="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item"
           >
             <i className="fas fa-sign-out-alt mr-3"></i>
             Sign Out
-          </a>
+          </p>
           {/* <button className="w-full bg-white cta-btn font-semibold py-2 mt-3 rounded-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
             <i className="fas fa-arrow-circle-up mr-3"></i> Upgrade to Pro!
           </button> */}

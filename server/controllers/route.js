@@ -52,3 +52,14 @@ export const getAllRoutes = async (req, res, next) => {
     next(error);
   }
 };
+
+export const updateStatusRoute = async (req, res, next) => {
+  const [route, routeStatus] = req.body;
+  route.status = routeStatus.routeStatus;
+  try {
+    const routeUpdate = await Route.findByIdAndUpdate(route._id, route);
+    res.status(200).json(routeUpdate);
+  } catch (error) {
+    next(error);
+  }
+};

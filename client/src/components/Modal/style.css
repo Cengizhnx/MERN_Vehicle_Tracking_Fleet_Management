@@ -70,6 +70,21 @@
   border-radius: 8px;
 }
 
+.modalRouteContainer {
+  max-width: 500px;
+  width: 80%;
+  position: fixed;
+  height: calc(40% - 100px);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  box-shadow: 0px 0px 18px 0px rgba(0, 0, 0, 0.75);
+  border-radius: 8px;
+}
+
 .modalRight {
   width: 100%;
 }

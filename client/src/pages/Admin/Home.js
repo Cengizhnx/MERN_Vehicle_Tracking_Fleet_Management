@@ -10,6 +10,7 @@ function Home() {
   - Müşteri Ekle - Düzenle - Sil - Aktif/Pasif
   - Filo Ekle - Düzenle - Sil - Aktif/Pasif
   - Filoya Araba Ekle - Sil
+  - Rotayı düzenle - Status değiş (iptal edildi - tamamlandı)  
   
   */
 

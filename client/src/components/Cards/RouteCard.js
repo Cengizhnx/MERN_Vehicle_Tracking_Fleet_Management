@@ -5,7 +5,7 @@ import CountUp from "react-countup";
 function RouteCard() {
   const { data } = useFetch("/route/getAllRoutes");
 
-  const filtered = data.filter((item) => item.status === "active");
+  // const filtered = data.filter((item) => item.status === "active");
   return (
     <div class="flex flex-wrap flex-row sm:flex-col justify-center items-center w-full sm:w-1/4 p-5 bg-white rounded-md shadow-xl border-l-4 border-yellow-300">
       <div class="flex justify-between w-full">
@@ -26,7 +26,7 @@ function RouteCard() {
       <div className="text-center">
         <CountUp
           className="font-bold text-5xl text-center"
-          end={filtered.length}
+          end={data.length}
         ></CountUp>{" "}
         <div class="font-bold text-sm">Rota</div>
       </div>
