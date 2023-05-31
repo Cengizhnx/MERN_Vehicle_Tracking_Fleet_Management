@@ -3,6 +3,7 @@ import customerSlice from "./customerSlice";
 import userSlice from "./userSlice";
 import modalslice from "./modalSlice";
 import routeSlice from "./routeSlice";
+import mapSlice from "./mapSlice";
 
 export const store = configureStore({
   reducer: {
@@ -10,5 +11,6 @@ export const store = configureStore({
     customers: customerSlice,
     modals: modalslice,
     routes: routeSlice,
+    maps: mapSlice,
   },
 });

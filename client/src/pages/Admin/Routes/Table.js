@@ -60,6 +60,16 @@ function Table({ routes, reFetchUser }) {
         width: 20,
       },
       {
+        header: "Toplam Mesafe",
+        key: "distance",
+        width: 20,
+      },
+      {
+        header: "Toplam Süre",
+        key: "duration",
+        width: 20,
+      },
+      {
         header: "Hareket Zamanı",
         key: "time",
         width: 25,
@@ -125,6 +135,8 @@ function Table({ routes, reFetchUser }) {
                     id: item?._id,
                     starting: item?.starting,
                     destination: item?.destination,
+                    distance: item?.distance,
+                    duration: item?.duration,
                     time: moment(item?.createdAt).format("DD.MM.YYYY - H:mm"),
                     status: item?.status === "active" ? "Yolda" : "Tamamlandı",
                     driverName: driver.first_name + " " + driver.last_name,

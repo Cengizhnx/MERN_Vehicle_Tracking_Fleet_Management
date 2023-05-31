@@ -273,6 +273,15 @@ const emailTemplate = (email, name, route, car, driver) => {
                                         } ${"-"} ${car.model} ${"-"} ${
     car.type
   } ${"-"} ${car.year}</strong></span><br><br></li>
+
+  <li><span style="font-size:16px;">Toplam Mesafe : <strong>${
+    route.distance
+  } km</strong></span><br><br></li>
+
+  <li><span style="font-size:16px;">Toplam Süre : <strong>${
+    route.duration
+  }</strong></span><br><br></li>
+
                                         <li>Şöfor : <strong>${
                                           driver.first_name
                                         } ${

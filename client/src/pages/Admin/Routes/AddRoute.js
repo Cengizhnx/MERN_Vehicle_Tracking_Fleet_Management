@@ -3,18 +3,25 @@ import Navbar from "../../../components/Navbar/Navbar";
 import Header from "../../../components/Header/Header";
 import { Toaster, toast } from "react-hot-toast";
 import useFetch from "../../../hooks/useFetch";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Loading from "../../../components/Loading/Loading";
 import drivers from "../../../data/drivers.json";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { visibilityChange } from "../../../redux/modalSlice";
+import MapModal from "./Map/MapModal";
+import { addMap, addMapNames } from "../../../redux/mapSlice";
 
 function AddRoute() {
   const { data, loading, error, reFetchUser } = useFetch("/fleet/getAllFleets");
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const user = useSelector((state) => state.users.user);
+  const modal = useSelector((state) => state.modals.modal);
+  const map = useSelector((state) => state.maps.map);
+  const mapName = useSelector((state) => state.maps.mapName);
 
   const [fleet, setFleet] = useState();
   const [car, setCar] = useState();
@@ -23,6 +30,8 @@ function AddRoute() {
   const [route, setRoute] = useState({
     starting: "",
     destination: "",
+    distance: "",
+    duration: "",
     customer_id: "",
     fleet_id: "",
     car_id: "",
@@ -48,6 +57,17 @@ function AddRoute() {
     setDriver(driverFind[0]);
   };
 
+  const handleDetailModalRoute = (e) => {
+    e.preventDefault();
+    dispatch(visibilityChange(true));
+  };
+
+  const handleRouteNameSlice = (text) => {
+    var texts = text.split(" ");
+    var completedText = texts.slice(0, 2).join(" ");
+    return completedText;
+  };
+
   const handleAddRoute = async (e) => {
     e.preventDefault();
 
@@ -55,8 +75,13 @@ function AddRoute() {
     route.fleet_id = fleet._id;
     route.car_id = car.id;
     route.driver_id = driver.id;
+    route.starting = handleRouteNameSlice(mapName.startName);
+    route.destination = handleRouteNameSlice(mapName.endName);
+    route.distance = map.distance;
+    route.duration = `${map.hours} saat ${map.remainingMinutes} dakika`;
 
     try {
+      console.log(route);
       const res = await axios.post("/route/addRoute", route);
       let mailUser = {
         email: user.email,
@@ -67,6 +92,8 @@ function AddRoute() {
         type: "addRoute",
       };
       await axios.post("/mail/sendMail", mailUser);
+      await dispatch(addMap(false));
+      await dispatch(addMapNames(false));
       // toast.success("Rota oluşturuldu !");
       navigate("/routes");
     } catch (error) {
@@ -82,51 +109,28 @@ function AddRoute() {
         <Header></Header>
 
         {loading && <Loading></Loading>}
-
+        {modal && <MapModal></MapModal>}
         {!loading && (
           <div className="w-full overflow-x-hidden border-t flex flex-col">
             <main className="w-full flex-grow px-6">
               <div className="flex flex-wrap">
                 {/* Route */}
-                <div className="w-full mt-6 pl-0 lg:pl-2">
+                <div className="w-full lg:w-1/2 mt-6 pl-0 lg:pl-2">
                   <p className="text-xl flex items-center py-2">
-                    <i className="fas fa-address-card mr-3"></i> Rota Bilgileri{" "}
+                    <i className="fas fa-address-card mr-3"></i> Rota Belirle{" "}
                   </p>
                   <div className="w-full pl-0 lg:pl-2">
                     <div className="leading-loose">
                       <form className="p-10 bg-white h-64 rounded shadow-xl">
                         <div className="flex flex-row space-x-5">
                           <div>
-                            <label className="block text-sm text-gray-600">
-                              Hareket Noktası
-                            </label>
-                            <input
-                              className="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded"
-                              id="starting"
-                              name="starting"
-                              type="text"
-                              required=""
-                              onChange={handleChange}
-                              placeholder="Hareket Noktası"
-                              aria-label="Starting"
-                            />
-                          </div>
-                          <div>
-                            <label className="block text-sm text-gray-600">
-                              Varış Noktası
-                            </label>
-                            <input
-                              className="w-full px-5  py-4 text-gray-700 bg-gray-200 rounded"
-                              id="destination"
-                              name="destination"
-                              type="text"
-                              required=""
-                              onChange={handleChange}
-                              placeholder="Varış Noktası"
-                              aria-label="Destination"
-                            />
-                          </div>
-                          <div>
+                            <button
+                              onClick={(e) => handleDetailModalRoute(e)}
+                              className="px-4 py-1 text-white font-light tracking-wider bg-gray-900 rounded"
+                              type="submit"
+                            >
+                              Rota Belirle
+                            </button>
                             <button
                               onClick={handleAddRoute}
                               className="px-4 py-1 text-white font-light tracking-wider bg-gray-900 rounded"
@@ -140,60 +144,95 @@ function AddRoute() {
                     </div>
                   </div>
                 </div>
+                {map && (
+                  <div className="w-full lg:w-1/2 mt-6 pl-0 lg:pl-2">
+                    <p className="text-xl flex items-center py-2">
+                      <i className="fas fa-address-card mr-3"></i> Rota
+                      Bilgileri{" "}
+                    </p>
+                    <div className="w-full pl-0 lg:pl-2">
+                      <div className="leading-loose">
+                        <form className="p-10 bg-white h-64 rounded space-y-3 shadow-xl">
+                          <div className="flex flex-row w-full justify-evenly">
+                            <p className="font-semibold">Başlangıç Noktası :</p>
+                            <p>{handleRouteNameSlice(mapName.startName)}</p>
+                          </div>
+                          <div className="flex flex-row w-full justify-evenly">
+                            <p className="font-semibold">Varış Noktası :</p>
+                            <p>{handleRouteNameSlice(mapName.endName)}</p>
+                          </div>
+                          <div className="flex flex-row w-full justify-evenly">
+                            <p className="font-semibold">Toplam Mesafe :</p>
+                            <p>{map.distance} km</p>
+                          </div>
+                          <div className="flex flex-row w-full justify-evenly">
+                            <p className="font-semibold">Toplam Süre :</p>
+                            <p>
+                              {map.hours} saat {map.remainingMinutes} dakika
+                            </p>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
               <div className="flex flex-wrap mt-3">
                 {/* Fleet */}
-                <div className="w-full lg:w-1/3 mt-6 pl-0 lg:pl-2">
-                  <p className="text-xl flex items-center py-2">
-                    <i className="fas fa-address-card mr-3"></i> Filo Bilgileri{" "}
-                  </p>
-                  <div className="w-full pl-0 lg:pl-2">
-                    <div className="leading-loose">
-                      <form className="p-10 bg-white h-52 rounded shadow-xl">
-                        <div>
-                          <label
-                            htmlFor="customers"
-                            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                          >
-                            Bir filo seçin
-                          </label>
-                          <select
-                            id="fleet"
-                            onChange={handleFleetChange}
-                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                          >
-                            <option disabled selected>
-                              Filo seçin
-                            </option>
-                            {data.map(
-                              (item) =>
-                                item.fleetOwner === user._id &&
-                                item.status === "active" && (
-                                  <option
-                                    value={item._id}
-                                    key={item._id}
-                                    // selected={item._id === fleet.fleetOwner}
-                                  >
-                                    {item.fleetName}
-                                  </option>
-                                )
+                {map && (
+                  <div className="w-full lg:w-1/3 mt-6 pl-0 lg:pl-2">
+                    <p className="text-xl flex items-center py-2">
+                      <i className="fas fa-address-card mr-3"></i> Filo
+                      Bilgileri{" "}
+                    </p>
+                    <div className="w-full pl-0 lg:pl-2">
+                      <div className="leading-loose">
+                        <form className="p-10 bg-white h-52 rounded shadow-xl">
+                          <div>
+                            <label
+                              htmlFor="customers"
+                              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                            >
+                              Bir filo seçin
+                            </label>
+                            <select
+                              id="fleet"
+                              onChange={handleFleetChange}
+                              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            >
+                              <option disabled selected>
+                                Filo seçin
+                              </option>
+                              {data.map(
+                                (item) =>
+                                  item.fleetOwner === user._id &&
+                                  item.status === "active" && (
+                                    <option
+                                      value={item._id}
+                                      key={item._id}
+                                      // selected={item._id === fleet.fleetOwner}
+                                    >
+                                      {item.fleetName}
+                                    </option>
+                                  )
+                              )}
+                            </select>
+                          </div>
+                          <div id="tasks" className="my-5">
+                            {fleet && (
+                              <p className="text-xs text-slate-500 my-5 text-center">
+                                <span className="font-bold">
+                                  {fleet.fleetName}
+                                </span>{" "}
+                                isimli filo seçildi.
+                              </p>
                             )}
-                          </select>
-                        </div>
-                        <div id="tasks" className="my-5">
-                          {fleet && (
-                            <p className="text-xs text-slate-500 my-5 text-center">
-                              <span className="font-bold">
-                                {fleet.fleetName}
-                              </span>{" "}
-                              isimli filo seçildi.
-                            </p>
-                          )}
-                        </div>
-                      </form>
+                          </div>
+                        </form>
+                      </div>
                     </div>
                   </div>
-                </div>
+                )}
 
                 {fleet && (
                   <div className="w-full lg:w-1/3 mt-6 pl-0 lg:pl-2">
