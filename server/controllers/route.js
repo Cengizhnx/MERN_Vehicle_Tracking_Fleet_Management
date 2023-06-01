@@ -6,6 +6,8 @@ export const addRoute = async (req, res, next) => {
     const {
       starting,
       destination,
+      start,
+      end,
       distance,
       duration,
       customer_id,
@@ -18,6 +20,8 @@ export const addRoute = async (req, res, next) => {
     const newRoute = new Route({
       starting,
       destination,
+      start,
+      end,
       distance,
       duration,
       customer_id,
@@ -32,6 +36,8 @@ export const addRoute = async (req, res, next) => {
     if (
       !newRoute.starting ||
       !newRoute.destination ||
+      !newRoute.start ||
+      !newRoute.end ||
       !newRoute.distance ||
       !newRoute.duration ||
       !newRoute.customer_id ||

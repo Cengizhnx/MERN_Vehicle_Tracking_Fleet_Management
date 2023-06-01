@@ -53,7 +53,6 @@ function ListRoutes() {
           </main>
         )}
 
-        <Footer></Footer>
       </div>
     </div>
   );

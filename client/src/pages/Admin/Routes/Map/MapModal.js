@@ -1,15 +1,15 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { visibilityChange } from "../../../../redux/modalSlice";
+import { visibilityChangeMapModal } from "../../../../redux/modalSlice";
 import Map from "./Map";
 
 function MapModal() {
   const dispatch = useDispatch();
 
   const handleDetailRoute = () => {
-    dispatch(visibilityChange(false));
+    dispatch(visibilityChangeMapModal(false));
   };
-  
+
   return (
     <div className="overlayChat">
       <div className="modalMapContainer">
@@ -20,7 +20,7 @@ function MapModal() {
           </div>
         </div>
         <div className="chat-area">
-            <Map></Map>
+          <Map></Map>
         </div>
         <div className="chat-typing-area-wrapper"></div>
       </div>

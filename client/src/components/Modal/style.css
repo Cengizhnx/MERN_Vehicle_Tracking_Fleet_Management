@@ -56,7 +56,7 @@
 }
 
 .modalChatContainer {
-  max-width: 900px;
+  max-width: 1200px;
   width: 100%;
   position: fixed;
   height: calc(100% - 100px);

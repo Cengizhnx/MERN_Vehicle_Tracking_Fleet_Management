@@ -5,6 +5,7 @@ export const modalslice = createSlice({
   initialState: {
     modal: false,
     routeModal: false,
+    mapModal: false,
   },
   reducers: {
     visibilityChange: (state, action) => {
@@ -13,10 +14,16 @@ export const modalslice = createSlice({
     visibilityChangeRouteModal: (state, action) => {
       state.routeModal = action.payload;
     },
+    visibilityChangeMapModal: (state, action) => {
+      state.mapModal = action.payload;
+    },
   },
 });
 
-export const { visibilityChange, visibilityChangeRouteModal } =
-  modalslice.actions;
+export const {
+  visibilityChange,
+  visibilityChangeRouteModal,
+  visibilityChangeMapModal,
+} = modalslice.actions;
 
 export default modalslice.reducer;

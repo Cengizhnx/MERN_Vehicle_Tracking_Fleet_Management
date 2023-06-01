@@ -8,7 +8,7 @@ import Loading from "../../../components/Loading/Loading";
 import drivers from "../../../data/drivers.json";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { visibilityChange } from "../../../redux/modalSlice";
+import { visibilityChange, visibilityChangeMapModal } from "../../../redux/modalSlice";
 import MapModal from "./Map/MapModal";
 import { addMap, addMapNames } from "../../../redux/mapSlice";
 
@@ -19,7 +19,7 @@ function AddRoute() {
   const dispatch = useDispatch();
 
   const user = useSelector((state) => state.users.user);
-  const modal = useSelector((state) => state.modals.modal);
+  const modal = useSelector((state) => state.modals.mapModal);
   const map = useSelector((state) => state.maps.map);
   const mapName = useSelector((state) => state.maps.mapName);
 
@@ -30,6 +30,8 @@ function AddRoute() {
   const [route, setRoute] = useState({
     starting: "",
     destination: "",
+    start: "",
+    end: "",
     distance: "",
     duration: "",
     customer_id: "",
@@ -59,7 +61,7 @@ function AddRoute() {
 
   const handleDetailModalRoute = (e) => {
     e.preventDefault();
-    dispatch(visibilityChange(true));
+    dispatch(visibilityChangeMapModal(true));
   };
 
   const handleRouteNameSlice = (text) => {
@@ -77,8 +79,10 @@ function AddRoute() {
     route.driver_id = driver.id;
     route.starting = handleRouteNameSlice(mapName.startName);
     route.destination = handleRouteNameSlice(mapName.endName);
+    route.start = mapName.start;
+    route.end = mapName.end;
     route.distance = map.distance;
-    route.duration = `${map.hours} saat ${map.remainingMinutes} dakika`;
+    route.duration = `${map.hours} saat ${map.remainingMinutes} dk`;
 
     try {
       console.log(route);

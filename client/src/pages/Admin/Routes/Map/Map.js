@@ -3,15 +3,15 @@ import L from "leaflet";
 import { TileLayer, MapContainer, LayersControl, useMap } from "react-leaflet";
 import RoutingControl, { tempInstance } from "./RoutingControl";
 import { OpenStreetMapProvider } from "leaflet-geosearch";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addMap, addMapNames } from "../../../../redux/mapSlice";
-import { visibilityChange } from "../../../../redux/modalSlice";
+import { visibilityChange, visibilityChangeMapModal } from "../../../../redux/modalSlice";
 
 const maps = {
   base: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
 };
 
-const Map = () => {
+const Map = ({ startLatLong, endLatLong }) => {
   const [map, setMap] = useState(null);
   const [start, setStart] = useState(null);
   const [end, setEnd] = useState(null);
@@ -19,6 +19,8 @@ const Map = () => {
   const [endName, setEndName] = useState(null);
   const [response, setResponse] = useState(null);
   const dispatch = useDispatch();
+
+  const modal = useSelector((state) => state.modals.modal);
 
   const provider = new OpenStreetMapProvider();
   const handleAddressSearch = async (addressType, address) => {
@@ -53,6 +55,8 @@ const Map = () => {
       let mapNames = {
         startName: startName,
         endName: endName,
+        start: start,
+        end: end,
       };
       dispatch(addMapNames(mapNames));
       dispatch(addMap(tempInstance));
@@ -61,21 +65,32 @@ const Map = () => {
   };
 
   const handleVisibilityModal = () => {
-    dispatch(visibilityChange(false));
+    dispatch(visibilityChangeMapModal(false));
   };
 
   function MyComponent(props) {
     // const map = useMap();
     // map.setView(start);
 
-    return (
-      <RoutingControl
-        position={"topleft"}
-        start={start}
-        end={end}
-        color={"#757de8"}
-      />
-    );
+    if (modal) {
+      return (
+        <RoutingControl
+          position={"topleft"}
+          start={startLatLong}
+          end={endLatLong}
+          color={"#757de8"}
+        />
+      );
+    } else {
+      return (
+        <RoutingControl
+          position={"topleft"}
+          start={start}
+          end={end}
+          color={"#757de8"}
+        />
+      );
+    }
   }
 
   return (
@@ -85,7 +100,7 @@ const Map = () => {
         zoom={3}
         zoomControl={false}
         style={{
-          height: "100vh",
+          height: !modal ? "100vh" : "100%",
           width: "100%",
           padding: 0,
           position: "relative",
@@ -110,62 +125,64 @@ const Map = () => {
             />
           </LayersControl.BaseLayer>
         </LayersControl>
-        <div
-          style={{
-            position: "absolute",
-            display: "flex",
-            flexDirection: "row",
-            top: "5%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            zIndex: 9999,
-          }}
-        >
-          <input
-            onChange={(e) => handleAddressSearch("start", e.target.value)}
-            placeholder="Başlangıç Noktası"
-            list="browsers"
-            name="browser"
-            id="browser"
+        {!modal && (
+          <div
             style={{
-              width: 225,
-              padding: "12px 20px",
-              margin: "8px 0",
-              fontSize: 13,
-              borderRadius: 5,
-              border: "1px solid gray",
+              position: "absolute",
+              display: "flex",
+              flexDirection: "row",
+              top: "5%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              zIndex: 9999,
             }}
-          />
-          <input
-            onChange={(e) => handleAddressSearch("end", e.target.value)}
-            style={{
-              width: 225,
-              padding: "12px 20px",
-              margin: "8px 10px",
-              fontSize: 13,
-              borderRadius: 5,
-              border: "1px solid gray",
-            }}
-            placeholder="Varış Noktası"
-            list="browsers"
-            name="browser"
-            id="browser"
-          />
-          <button
-            onClick={addDistanceTime}
-            className="px-3 text-white font-light tracking-wider bg-gray-900 rounded"
-            type="submit"
           >
-            Kaydet
-          </button>
-          {response && (
-            <datalist id="browsers">
-              {response.map((i) => (
-                <option value={i.label} />
-              ))}
-            </datalist>
-          )}
-        </div>
+            <input
+              onChange={(e) => handleAddressSearch("start", e.target.value)}
+              placeholder="Başlangıç Noktası"
+              list="browsers"
+              name="browser"
+              id="browser"
+              style={{
+                width: 225,
+                padding: "12px 20px",
+                margin: "8px 0",
+                fontSize: 13,
+                borderRadius: 5,
+                border: "1px solid gray",
+              }}
+            />
+            <input
+              onChange={(e) => handleAddressSearch("end", e.target.value)}
+              style={{
+                width: 225,
+                padding: "12px 20px",
+                margin: "8px 10px",
+                fontSize: 13,
+                borderRadius: 5,
+                border: "1px solid gray",
+              }}
+              placeholder="Varış Noktası"
+              list="browsers"
+              name="browser"
+              id="browser"
+            />
+            <button
+              onClick={addDistanceTime}
+              className="px-3 text-white font-light tracking-wider bg-gray-900 rounded"
+              type="submit"
+            >
+              Kaydet
+            </button>
+            {response && (
+              <datalist id="browsers">
+                {response.map((i) => (
+                  <option value={i.label} />
+                ))}
+              </datalist>
+            )}
+          </div>
+        )}
       </MapContainer>
     </>
   );
