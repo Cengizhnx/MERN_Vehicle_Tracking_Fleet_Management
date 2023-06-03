@@ -1,10 +1,12 @@
 import React from "react";
-import useFetch from "../../hooks/useFetch";
 import CountUp from "react-countup";
+import useFetch from "../../../hooks/useFetch";
+import { useSelector } from "react-redux";
 
 function FleetCard() {
   const { data, loading, error, reFetchUser } = useFetch("/fleet/getAllFleets");
-
+  const user = useSelector((state) => state.users.user);
+  const filtered = data?.filter((item) => item.fleetOwner === user._id);
   // const filtered = data.filter((item) => item.status === "active");
 
   return (
@@ -27,7 +29,7 @@ function FleetCard() {
       <div className="text-center">
         <CountUp
           className="font-bold text-5xl text-center"
-          end={data.length}
+          end={filtered.length}
         ></CountUp>{" "}
         <div class="font-bold text-sm">Filo</div>
       </div>

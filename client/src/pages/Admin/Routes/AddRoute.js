@@ -8,7 +8,10 @@ import Loading from "../../../components/Loading/Loading";
 import drivers from "../../../data/drivers.json";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { visibilityChange, visibilityChangeMapModal } from "../../../redux/modalSlice";
+import {
+  visibilityChange,
+  visibilityChangeMapModal,
+} from "../../../redux/modalSlice";
 import MapModal from "./Map/MapModal";
 import { addMap, addMapNames } from "../../../redux/mapSlice";
 
@@ -96,8 +99,8 @@ function AddRoute() {
         type: "addRoute",
       };
       await axios.post("/mail/sendMail", mailUser);
-      await dispatch(addMap(false));
-      await dispatch(addMapNames(false));
+      dispatch(addMap(false));
+      dispatch(addMapNames(false));
       // toast.success("Rota oluşturuldu !");
       navigate("/routes");
     } catch (error) {
@@ -126,23 +129,35 @@ function AddRoute() {
                   <div className="w-full pl-0 lg:pl-2">
                     <div className="leading-loose">
                       <form className="p-10 bg-white h-64 rounded shadow-xl">
-                        <div className="flex flex-row space-x-5">
-                          <div>
-                            <button
-                              onClick={(e) => handleDetailModalRoute(e)}
-                              className="px-4 py-1 text-white font-light tracking-wider bg-gray-900 rounded"
-                              type="submit"
-                            >
-                              Rota Belirle
-                            </button>
-                            <button
-                              onClick={handleAddRoute}
-                              className="px-4 py-1 text-white font-light tracking-wider bg-gray-900 rounded"
-                              type="submit"
-                            >
-                              Kaydet
-                            </button>
-                          </div>
+                        <div className="flex flex-col items-center justify-center space-y-5 h-full">
+                          {!mapName.start && !mapName.end && (
+                            <div className="flex flex-col items-center justify-center space-y-1">
+                              <p>⚠️ Başlangıç ve Varış noktalarını seçiniz.</p>
+                              <button
+                                onClick={(e) => handleDetailModalRoute(e)}
+                                className="px-4 py-1 text-white font-light tracking-wider bg-gray-900 rounded"
+                                type="submit"
+                              >
+                                Rota Belirle
+                              </button>
+                            </div>
+                          )}
+
+                          {driver ? (
+                            <div className="flex flex-col items-center justify-center space-y-">
+                              <p>✔️ Rotanızı oluşturabilirsiniz.</p>
+                              <button
+                                onClick={handleAddRoute}
+                                className="px-4 py-1 text-white font-light tracking-wider bg-gray-900 rounded"
+                                type="submit"
+                              >
+                                Kaydet
+                              </button>
+                            </div>
+                          ) : (
+                            mapName.start &&
+                            mapName.end && <p>⚠️ Tüm alanları doldurunuz.</p>
+                          )}
                         </div>
                       </form>
                     </div>

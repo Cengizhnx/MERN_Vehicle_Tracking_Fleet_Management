@@ -1,11 +1,13 @@
 import React from "react";
-import useFetch from "../../hooks/useFetch";
 import CountUp from "react-countup";
+import { useSelector } from "react-redux";
+import useFetch from "../../../hooks/useFetch";
 
 function RouteCard() {
   const { data } = useFetch("/route/getAllRoutes");
+  const user = useSelector((state) => state.users.user);
+  const filtered = data?.filter((item) => item.customer_id === user._id);
 
-  // const filtered = data.filter((item) => item.status === "active");
   return (
     <div class="flex flex-wrap flex-row sm:flex-col justify-center items-center w-full sm:w-1/4 p-5 bg-white rounded-md shadow-xl border-l-4 border-yellow-300">
       <div class="flex justify-between w-full">
@@ -26,7 +28,7 @@ function RouteCard() {
       <div className="text-center">
         <CountUp
           className="font-bold text-5xl text-center"
-          end={data.length}
+          end={filtered.length}
         ></CountUp>{" "}
         <div class="font-bold text-sm">Rota</div>
       </div>

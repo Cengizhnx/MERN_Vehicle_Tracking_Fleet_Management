@@ -39,7 +39,6 @@ function Fleets() {
           </main>
         )}
 
-        <Footer></Footer>
       </div>
     </div>
   );

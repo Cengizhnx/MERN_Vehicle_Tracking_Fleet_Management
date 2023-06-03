@@ -3,6 +3,7 @@ import Cards from "../Cards/Cards";
 import { useSelector } from "react-redux";
 import Charts from "../Charts/Charts";
 import CardCharts from "../Cards/CardCharts";
+import CustomerCards from "../Cards/CustomerCards/CustomerCards";
 
 function Dashboard() {
   const user = useSelector((state) => state.users.user);
@@ -12,16 +13,20 @@ function Dashboard() {
       <main className="w-full flex-grow p-6">
         {user.name === "admin" && (
           <>
-            <h1 className="text-3xl text-black">Dashboard</h1>
+            <h1 className="text-3xl text-black">Kontrol Paneli</h1>
             <Cards></Cards>
             <CardCharts></CardCharts>
           </>
         )}
 
         {user.name !== "admin" && (
-          <div className="w-full flex flex-row space-x-10 px-4">
-            <Charts></Charts>
-          </div>
+          <>
+            <h1 className="text-3xl text-black">Kontrol Paneli</h1>
+            <CustomerCards></CustomerCards>
+            <div className="w-full flex flex-row space-x-10 px-4">
+              <Charts></Charts>
+            </div>
+          </>
         )}
 
         {/* <div className="w-full mt-12">

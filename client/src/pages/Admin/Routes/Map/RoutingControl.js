@@ -18,7 +18,7 @@ const createRoutineMachineLayer = ({ position, start, end, color }) => {
   });
   instance.on("routeselected", function (e) {
     var routeSummary = e.route;
-    let minutes = (routeSummary.summary.totalTime % 36000) / 60;
+    let minutes = (routeSummary.summary.totalTime % 360000) / 60;
     const hours = Math.floor(minutes / 60);
     const remainingMinutes = minutes % 60;
     let distance = routeSummary.summary.totalDistance / 1000;

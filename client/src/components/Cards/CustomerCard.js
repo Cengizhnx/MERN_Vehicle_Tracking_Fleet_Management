@@ -24,7 +24,7 @@ function CustomerCard() {
             //   style="padding-top: 0.1em; padding-bottom: 0.1rem"
             class="flex items-center text-xs px-3 bg-blue-200 text-blue-800 rounded-full"
           >
-            100%
+            Müşteri
           </div>
         </div>
       </div>

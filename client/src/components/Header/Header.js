@@ -16,6 +16,27 @@ function Header() {
     navigate("/login");
   };
 
+  const handleUsername = (text) => {
+    let texts = text.split(" ");
+    let combineWords = "";
+
+    if (texts.length >= 2) {
+      if (user.name === "admin") {
+        combineWords += "🔒";
+      } else {
+        combineWords += texts[0][0].toUpperCase() + texts[1][0]?.toUpperCase();
+      }
+    } else {
+      if (user.name === "admin") {
+        combineWords += "🔒";
+      } else {
+        combineWords += texts[0][0].toUpperCase()
+      }
+    }
+
+    return combineWords;
+  };
+
   const user = useSelector((state) => state.users.user);
 
   return (
@@ -28,9 +49,9 @@ function Header() {
         >
           <button
             onClick={(prev) => setOpen((prevState) => !prevState)}
-            className="relative z-10 w-12 h-12 rounded-full overflow-hidden border-4 border-gray-400 hover:border-gray-300 focus:border-gray-300 focus:outline-none"
+            className="relative z-10 text-xl w-12 h-12 rounded-full overflow-hidden border-4 border-gray-400 hover:border-gray-300 focus:border-gray-300 focus:outline-none"
           >
-            <img src="https://source.unsplash.com/uJ8LNVCBjFQ/400x400" />
+            {handleUsername(user.name)}
           </button>
           {/* <button
             x-show="isOpen"
@@ -43,23 +64,11 @@ function Header() {
               open ? "block" : "hidden"
             }`}
           >
-            <a
-              href="#"
-              className="block px-4 py-2 account-link hover:text-white"
-            >
-              Account
-            </a>
-            <a
-              href="#"
-              className="block px-4 py-2 account-link hover:text-white"
-            >
-              Support
-            </a>
             <p
               onClick={handleLogout}
               className="cursor-pointer block px-4 py-2 account-link hover:text-white"
             >
-              Sign Out
+              Çıkış Yap
             </p>
           </div>
         </div>

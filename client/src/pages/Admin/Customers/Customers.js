@@ -37,7 +37,6 @@ function Customers() {
           </main>
         )}
 
-        <Footer></Footer>
       </div>
     </div>
   );
