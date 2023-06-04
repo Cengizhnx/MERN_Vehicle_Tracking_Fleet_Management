@@ -251,7 +251,9 @@ const emailTemplate = (email, name, route, car, driver) => {
                                 <td class="pad" style="padding-bottom:10px;padding-left:40px;padding-right:10px;padding-top:10px;">
                                   <div style="font-family: sans-serif">
                                     <div class style="font-size: 12px; font-family: 'Oswald', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; mso-line-height-alt: 14.399999999999999px; color: #555555; line-height: 1.2;">
-                                      <p style="margin: 0; font-size: 14px; text-align: left; mso-line-height-alt: 16.8px;"><span style="font-size:26px;"><strong>12345678910 numaralı rota oluşturuldu 🚚</strong></span></p>
+                                      <p style="margin: 0; font-size: 14px; text-align: left; mso-line-height-alt: 16.8px;"><span style="font-size:26px;"><strong>${
+                                        route._id
+                                      } numaralı rota oluşturuldu 🚚</strong></span></p>
                                     </div>
                                   </div>
                                 </td>
