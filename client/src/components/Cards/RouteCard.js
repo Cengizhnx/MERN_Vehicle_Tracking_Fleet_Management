@@ -7,7 +7,7 @@ function RouteCard() {
 
   // const filtered = data.filter((item) => item.status === "active");
   return (
-    <div class="flex flex-wrap flex-row sm:flex-col justify-center items-center w-full sm:w-1/4 p-5 bg-white rounded-md shadow-xl border-l-4 border-yellow-300">
+    <div class="flex flex-wrap flex-row sm:flex-col justify-center items-center w-full sm:w-1/4 p-5 bg-white rounded-md shadow-xl border-l-4 border-green-300">
       <div class="flex justify-between w-full">
         <div>
           <div class="p-2">
@@ -17,7 +17,7 @@ function RouteCard() {
         <div>
           <div
             //   style="padding-top: 0.1em; padding-bottom: 0.1rem"
-            class="flex items-center text-xs px-3 bg-yellow-200 text-yellow-800 rounded-full"
+            class="flex items-center text-xs px-3 bg-green-200 text-green-800 rounded-full"
           >
             Rota
           </div>

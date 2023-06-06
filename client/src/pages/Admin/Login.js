@@ -40,7 +40,7 @@ export default function Login() {
           <div className="rounded-t mb-0 px-6 pt-6">
             <div className="text-center mb-3">
               <h1 className="text-Gray-500 text-4xl tracking-wide font-bold">
-                LOGIN
+                GIRIŞ YAP
               </h1>
             </div>
             <div className="flex item-center justify-center">
@@ -50,7 +50,7 @@ export default function Login() {
           <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
             <div className="text-Gray-400 text-center mb-3 font-bold">
               <small className="italic text-gray-400">
-                login with credentials
+                kimlik bilgileriyle giriş yap
               </small>
             </div>
             <form>
@@ -75,12 +75,12 @@ export default function Login() {
                   className="block uppercase tracking-wide text-Gray-600 text-xs font-bold mb-2"
                   for="grid-password"
                 >
-                  Password
+                  Şifre
                 </label>
                 <input
                   type="password"
                   name="password"
-                  placeholder="Password"
+                  placeholder="Şifre"
                   id="password"
                   onChange={handleChange}
                   className="border-0 px-3 py-3 placeholder-Gray-300 text-Gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
@@ -93,7 +93,7 @@ export default function Login() {
                   className="bg-gray-800 tracking-wider text-white active:bg-Gray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
                   type="button"
                 >
-                  Login{" "}
+                  Giriş Yap{" "}
                 </button>
               </div>
             </form>

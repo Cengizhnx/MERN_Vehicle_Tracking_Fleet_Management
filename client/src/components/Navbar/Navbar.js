@@ -12,8 +12,15 @@ function Navbar() {
   if (!loading) {
     dispatch(allCustomers(data));
   }
-  
+
   const user = useSelector((state) => state.users.user);
+  const tarih = new Date();
+
+  const gun = tarih.getDate();
+  const ay = tarih.toLocaleString("tr-TR", { month: "long" });
+  const yil = tarih.getFullYear();
+  const saat = tarih.getHours();
+  const dakika = tarih.getMinutes();
   return (
     <div>
       <aside className="relative bg-sidebar h-screen w-64 hidden sm:block shadow-xl">
@@ -25,7 +32,7 @@ function Navbar() {
             {user.name}
           </Link>
           <button className="w-full bg-white cta-btn font-semibold py-2 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
-            <i className="fas fa-plus mr-3"></i> New Report
+            {gun + " " + ay + " " + yil} , {saat + ':' + dakika}
           </button>
         </div>
         <nav className="text-white text-base font-semibold pt-3">

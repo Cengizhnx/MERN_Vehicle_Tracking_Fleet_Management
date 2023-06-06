@@ -7,8 +7,8 @@ function Cards() {
   return (
     <div class="flex sm:flex-row flex-col space-y-5 sm:space-y-0 sm:space-x-3 mt-5 flex-row w-full items-center justify-center">
       <CustomerCard></CustomerCard>
-      <FleetCard></FleetCard>
       <RouteCard></RouteCard>
+      <FleetCard></FleetCard>
       {/* <div class="flex flex-wrap flex-row sm:flex-col justify-center items-center w-full sm:w-1/4 p-5 bg-white rounded-md shadow-xl border-l-4 border-red-300">
         <div class="flex justify-between w-full">
           <div>
