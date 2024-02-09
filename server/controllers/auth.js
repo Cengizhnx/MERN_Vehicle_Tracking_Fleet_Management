@@ -47,7 +47,7 @@ export const login = async (req, res, next) => {
 
     const token = jwt.sign({ user: user }, process.env.JWT);
 
-    res.json({ message: "Welcome Back", token: token });
+    return res.json({ message: "Welcome Back", token: token });
 
     // const { password, ...otherDetails } = user._doc;
 
